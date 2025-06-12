@@ -1,0 +1,28 @@
+ClusterMaster:
+  private_ip: ${lookup(cluster_master, "clustermanager", null) != null ? cluster_master["clustermanager"].private_ip : ""}
+  instance_id: ${lookup(cluster_master, "clustermanager", null) != null ? cluster_master["clustermanager"].instance_id : ""}
+
+indexers:
+%{ for name, instance in indexers ~}
+  ${name}:
+    private_ip: ${instance.private_ip}
+    instance_id: ${instance.instance_id}
+%{ endfor ~}
+
+search_heads:
+%{ for name, instance in search_heads ~}
+  ${name}:
+    private_ip: ${instance.private_ip}
+    instance_id: ${instance.instance_id}
+%{ endfor ~}
+
+Management_server:
+  private_ip: ${lookup(Management_server, "Management_server", null) != null ? Management_server["Management_server"].private_ip : ""}
+  instance_id: ${lookup(Management_server, "Management_server", null) != null ? Management_server["Management_server"].instance_id : ""}
+
+IFs:
+  private_ip: ${lookup(IFs, "IF", null) != null ? IFs["IF"].private_ip : ""}
+  instance_id: ${lookup(IFs, "IF", null) != null ? IFs["IF"].instance_id : ""}
+
+splunk_license_url: ${splunk_license_url}
+splunk_admin_password: ${splunk_admin_password}
